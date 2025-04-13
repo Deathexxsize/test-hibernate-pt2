@@ -1,0 +1,36 @@
+package org.example.controller;
+
+import org.example.controller.impl.UserControllerImpl;
+
+import java.util.Scanner;
+
+public class Main {
+    private static final UserControllerImpl userControllerImpl = new UserControllerImpl();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("\n\n1. Создать пользователя\n2. Найти пользователя\n3. Обновить данные пользователя\n4. Удалить пользователя");
+        System.out.print("Выбрать: ");
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                userControllerImpl.handleCreateUser();
+                break;
+            case 2:
+                // find user
+                break;
+            case 3:
+                // update user
+                break;
+            case 4:
+                // delete user
+                break;
+            default:
+                System.out.println("Не вернон значение");
+                break;
+        }
+
+    }
+}
