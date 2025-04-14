@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example;
 
 import org.example.controller.impl.UserControllerImpl;
 
@@ -19,7 +19,7 @@ public class Main {
                 userControllerImpl.handleCreateUser();
                 break;
             case 2:
-                // find user
+                userControllerImpl.handleFindUser();
                 break;
             case 3:
                 // update user
@@ -31,8 +31,5 @@ public class Main {
                 System.out.println("Не вернон значение");
                 break;
         }
-
-        // типо пишу код туда сюда проверка иеди апжыаплва
-
     }
 }

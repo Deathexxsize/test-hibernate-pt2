@@ -12,6 +12,8 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public void handleCreateUser() {
+        System.out.println("\n== Регистрация ==");
+
         System.out.println("\nВведите ваши данные: ");
 
         System.out.print("Имя: ");
@@ -30,7 +32,12 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public void handleFindUser() {
+        System.out.println("\n== Поиск пользователя ==");
 
+        System.out.print("\nВведите имя пользователя: ");
+        String username = scanner.nextLine();
+
+        userServiceImpl.findByUsername(username);
     }
 
     @Override

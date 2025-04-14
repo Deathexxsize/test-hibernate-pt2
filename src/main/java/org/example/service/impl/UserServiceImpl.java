@@ -1,12 +1,11 @@
 package org.example.service.impl;
 
 import org.example.dao.impl.UserDaoImpl;
-import org.example.exceptions.DuplicateUserException;
-import org.example.exceptions.InvalidEmailException;
-import org.example.exceptions.NameTooShortException;
-import org.example.exceptions.UnderAgeException;
+import org.example.exceptions.*;
 import org.example.model.User;
 import org.example.service.UserService;
+
+import java.util.Map;
 
 public class UserServiceImpl implements UserService {
     private final UserDaoImpl userDaoImpl = new UserDaoImpl();
@@ -25,8 +24,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void findById(int id) {
-
+    public void findByUsername(String username) {
+        if (username.length() < 3) throw new NameTooShortException("Слишком короткое имя");
+        if (userDaoImpl.findUserByUsername(username)) {
+            Map<String, Object> userInfo = userDaoImpl.getUserInfo(username);
+            userInfo.forEach((Key, value) -> System.out.println(Key + value));
+        } else {
+            throw new UserNotFoundException("Данный пользователь не существует");
+        }
     }
 
     @Override

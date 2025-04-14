@@ -6,6 +6,9 @@ import org.example.model.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserDaoImpl implements UserDao {
     @Override
     public void saveUser(User user) {
@@ -16,7 +19,7 @@ public class UserDaoImpl implements UserDao {
 
             session.save(user);
             tx.commit();
-            System.out.println("Пользователь успешно сохранен");
+            System.out.println("\nПользователь успешно сохранен");
         } catch (Exception e) {
             if(tx != null) tx.rollback();
             e.printStackTrace();
@@ -25,9 +28,20 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserById(int id) {
+    public Map<String, Object> getUserInfo(String username) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(User.class, id);
+            String hql = "FROM User WHERE username = :username";
+            User user = session.createQuery(hql, User.class)
+                    .setParameter("username", username)
+                    .uniqueResult();
+
+            Map<String, Object> userInfo = new HashMap<>();
+
+            userInfo.put("Имя пользователя: ", user.getName());
+            userInfo.put("Возраст: ", user.getAge());
+            userInfo.put("Никнейм: ", user.getUsername());
+
+            return userInfo;
         }
     }
 
