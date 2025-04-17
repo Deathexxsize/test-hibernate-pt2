@@ -11,22 +11,32 @@ public class UserServiceImpl implements UserService {
     private final UserDaoImpl userDaoImpl = new UserDaoImpl();
 
     @Override
-    public void validatorUser(User user, boolean isUpdate) { // проверяет исходоящие данные пользователя
-        if (user.getName().length() < 3)
+    public void addUser(User user) {
+        if (validatorUser(user)) {
+            userDaoImpl.saveUser(user);
+        }
+    }
+
+    @Override
+    public boolean validatorUser(User user) { // проверяет исходоящие данные пользователя
+
+        if (user.getName().length() < 3) {
             throw new NameTooShortException("Слишком короткое имя");
+        }
 
-        if (user.getAge() < 18)
+        if (user.getAge() < 18) {
             throw new UnderAgeException("Возраст младше 18 лет");
+        }
 
-        if (!user.getEmail().contains("@gmail.com") && !user.getEmail().contains("@mail.ru"))
+        if (!user.getEmail().contains("@gmail.com") && !user.getEmail().contains("@mail.ru")) {
             throw new InvalidEmailException("Неправильный формат email");
+        }
 
-        // При создании нового пользователя — проверка на дубликат
-        if (!isUpdate && userDaoImpl.findUserByUsername(user.getUsername())) {
+        if (userDaoImpl.findUserByUsername(user.getUsername())) {
             throw new DuplicateUserException("Пользователь с таким никнеймом уже существует");
         }
 
-        if (isUpdate) userDaoImpl.saveUser(user);
+        return true;
     }
 
     @Override
@@ -51,14 +61,14 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateUserException("Новый никнейм уже занят");
         }
 
-        validatorUser(newUserData, true);
+        if (validatorUser(newUserData)) {
+            existingUser.setName(newUserData.getName());
+            existingUser.setAge(newUserData.getAge());
+            existingUser.setEmail(newUserData.getEmail());
+            existingUser.setUsername(newUserData.getUsername());
 
-        existingUser.setName(newUserData.getName());
-        existingUser.setAge(newUserData.getAge());
-        existingUser.setEmail(newUserData.getEmail());
-        existingUser.setUsername(newUserData.getUsername());
-
-        userDaoImpl.updateUser(existingUser);
+            userDaoImpl.updateUser(existingUser);
+        }
     }
 
     @Override

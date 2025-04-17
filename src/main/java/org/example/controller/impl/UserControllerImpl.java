@@ -27,7 +27,7 @@ public class UserControllerImpl implements UserController {
 
         User user = new User(name, age, email, username);
 
-        userServiceImpl.validatorUser(user, true);
+        userServiceImpl.addUser(user);
     }
 
     @Override
