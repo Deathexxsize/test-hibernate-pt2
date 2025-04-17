@@ -27,7 +27,7 @@ public class UserControllerImpl implements UserController {
 
         User user = new User(name, age, email, username);
 
-        userServiceImpl.validatorUser(user);
+        userServiceImpl.validatorUser(user, true);
     }
 
     @Override
@@ -42,11 +42,34 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public void handleUpdateUser() {
+        System.out.println("\n\n== Редактировать пользователя ==");
 
+        System.out.print("\nНайдите пользователя чтобы редактировать: ");
+        String oldUsername = scanner.nextLine();
+
+            System.out.print("\n\n== Введите новые данные ==");
+
+            System.out.print("\nИмя: ");
+            String newName = scanner.nextLine();
+            System.out.print("Введите возраст: ");
+            int newAge = new Scanner(System.in).nextInt();
+            System.out.print("Ваш email: ");
+            String newEmail = scanner.nextLine();
+            System.out.print("Придумайте никнейм: ");
+            String newUsername = scanner.nextLine();
+
+            User newUserData = new User(newName, newAge, newEmail, newUsername);
+
+            userServiceImpl.editUser(oldUsername, newUserData);
     }
 
     @Override
     public void handleDeleteUser() {
+        System.out.println("\n\n== Удаление пользователя ==");
 
+        System.out.print("Введите ник игррока для удаление: ");
+        String deleteUser = scanner.nextLine();
+
+        userServiceImpl.removeUser(deleteUser);
     }
 }

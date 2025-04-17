@@ -36,6 +36,7 @@ public class UserDaoImpl implements UserDao {
                     .uniqueResult();
 
             Map<String, Object> userInfo = new HashMap<>();
+            /* Можно в будущем создать отдельный DTO обьект для передачи информации между слоями*/
 
             userInfo.put("Имя пользователя: ", user.getName());
             userInfo.put("Возраст: ", user.getAge());
@@ -63,23 +64,44 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void deleteUser(String username) {
         Transaction tx = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
 
-            session.delete(user);
+            // Предположим, у тебя есть User с полем "username"
+            User user = session.createQuery("FROM User WHERE username = :username", User.class)
+                    .setParameter("username", username)
+                    .uniqueResult();
+
+            if (user != null) {
+                session.delete(user);
+                System.out.println("Пользователь успешно удален");
+            } else {
+                System.out.println("Пользователь не найден");
+            }
+
             tx.commit();
-            System.out.print("Пользователь успешно удален");
         } catch (Exception e) {
-            if(tx != null) tx.rollback();
+            if (tx != null) tx.rollback();
             e.printStackTrace();
             System.out.println("Ошибка при удалении пользователя");
         }
     }
 
-    public boolean findUserByUsername(String username) {
+
+    @Override
+    public User getUserByUsername(String username) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM User WHERE username = :username";
+            return session.createQuery(hql, User.class)
+                    .setParameter("username", username)
+                    .uniqueResult();
+        }
+    }
+
+    public boolean findUserByUsername(String username) { // ищет пользователя и возврощает true or false
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Long count = session.createQuery(
                     "SELECT COUNT(u) FROM User u WHERE u.username = :username", Long.class)
@@ -92,4 +114,6 @@ public class UserDaoImpl implements UserDao {
             return false;
         }
     }
+
+
 }

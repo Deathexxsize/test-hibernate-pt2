@@ -9,5 +9,6 @@ public interface UserDao {
     public void saveUser(User user);
     public Map<String, Object> getUserInfo(String username);
     public void updateUser(User user);
-    public void deleteUser(User user);
+    public void deleteUser(String username);
+    public User getUserByUsername(String username);
 }

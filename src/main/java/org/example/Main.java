@@ -22,10 +22,10 @@ public class Main {
                 userControllerImpl.handleFindUser();
                 break;
             case 3:
-                // update user
+                userControllerImpl.handleUpdateUser();
                 break;
             case 4:
-                // delete user
+                userControllerImpl.handleDeleteUser();
                 break;
             default:
                 System.out.println("Не вернон значение");
