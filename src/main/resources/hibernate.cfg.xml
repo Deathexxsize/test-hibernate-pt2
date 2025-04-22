@@ -13,7 +13,9 @@
         <property name="hibernate.show_sql">true</property>
 
         <!-- Сущности -->
+        <mapping class="org.example.model.University"/>
         <mapping class="org.example.model.User"/>
+        <mapping class="org.example.model.Country"/>
 
     </session-factory>
 </hibernate-configuration>

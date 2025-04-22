@@ -1,6 +1,11 @@
 package org.example;
 
 import org.example.controller.impl.UserControllerImpl;
+import org.example.infrastructure.HibernateUtil;
+import org.example.model.University;
+import org.example.model.User;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.Scanner;
 
@@ -31,7 +36,6 @@ public class Main {
                 System.out.println("Не вернон значение");
                 break;
         }
-    }
 
-    // test commit - The practice of relationships between tables
+    }
 }

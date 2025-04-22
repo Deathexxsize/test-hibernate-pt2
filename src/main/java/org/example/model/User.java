@@ -1,28 +1,32 @@
 package org.example.model;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
-    private int age;
+    private Integer age;
     private String email;
     private String username;
 
-    public User(String name, int age, String email, String username) {
-        this.name = name;
-        this.age = age;
-        this.email = email;
-        this.username = username;
-    }
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "university_id")
+    private University university;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "country_id")
+    private Country country;
 }

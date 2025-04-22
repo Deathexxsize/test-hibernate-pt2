@@ -25,9 +25,9 @@ public class UserControllerImpl implements UserController {
         System.out.print("Придумайте никнейм: ");
         String username = scanner.nextLine();
 
-        User user = new User(name, age, email, username);
+        // User user = new User(name, age, email, username);
 
-        userServiceImpl.addUser(user);
+        // userServiceImpl.addUser(user);
     }
 
     @Override
@@ -58,9 +58,9 @@ public class UserControllerImpl implements UserController {
             System.out.print("Придумайте никнейм: ");
             String newUsername = scanner.nextLine();
 
-            User newUserData = new User(newName, newAge, newEmail, newUsername);
+            // User newUserData = new User(newName, newAge, newEmail, newUsername);
 
-            userServiceImpl.editUser(oldUsername, newUserData);
+            // userServiceImpl.editUser(oldUsername, newUserData);
     }
 
     @Override
